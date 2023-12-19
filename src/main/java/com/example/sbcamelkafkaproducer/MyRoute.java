@@ -6,7 +6,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class MyRoute extends RouteBuilder {
 
     @Override
@@ -27,7 +27,32 @@ public class MyRoute extends RouteBuilder {
                 .get("/hello-kafka-medium")
                 .to("direct:hello-kafka-medium")
                 .get("/hello-kafka-low")
-                .to("direct:hello-kafka-low");
+                .to("direct:hello-kafka-low")
+                .get("/start")
+                .to("direct:start")
+                .get("/stop")
+                .to("direct:stop");
+
+        from("direct:start")
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+
+                        exchange.getContext().getRouteController().startRoute("5 - G2 C3");
+                        exchange.getContext().getRouteController().startRoute("6 - G2 C4");
+                    }
+                });
+
+
+        from("direct:stop")
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+
+                        exchange.getContext().getRouteController().stopRoute("5 - G2 C3");
+                        exchange.getContext().getRouteController().stopRoute("6 - G2 C4");
+                    }
+                });
 
 
         from("direct:hello-kafka-high")
@@ -75,12 +100,20 @@ public class MyRoute extends RouteBuilder {
                 .log("-- topic ${headers[kafka.TOPIC]} -- partition ${headers[kafka.PARTITION]}" +
                         " -- offset ${headers[kafka.OFFSET]} -- key ${headers[kafka.KEY]} ");
 
-       /* from("kafka:{{topic.debezium}}?brokers={{broker}}")
-                .log("Message received from Kafka : ${body}")
-                .log("    on the topic ${headers[kafka.TOPIC]}")
-                .log("    on the partition ${headers[kafka.PARTITION]}")
-                .log("    with the offset ${headers[kafka.OFFSET]}")
-                .log("    with the key ${headers[kafka.KEY]}");*/
+        // Kafka Consumer
+        from("kafka:{{topic}}?brokers={{broker}}&groupId=G2")
+                // .log("Message received from Kafka by group2 c1 : ${body}")
+                .routeId("5 - G2 C3")
+                .noAutoStartup()
+                .log("-- topic ${headers[kafka.TOPIC]} -- partition ${headers[kafka.PARTITION]}" +
+                        " -- offset ${headers[kafka.OFFSET]} -- key ${headers[kafka.KEY]} ");
+
+        from("kafka:{{topic}}?brokers={{broker}}&groupId=G2")
+                // .log("Message received from Kafka by group2 c2 : ${body}")
+                .routeId("6 - G2 C4")
+                .noAutoStartup()
+                .log("-- topic ${headers[kafka.TOPIC]} -- partition ${headers[kafka.PARTITION]}" +
+                        " -- offset ${headers[kafka.OFFSET]} -- key ${headers[kafka.KEY]} ");
 
     }
 
