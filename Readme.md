@@ -1,3 +1,4 @@
+**Whay Debezium with Camel ?**
 
 There has always been an issue when is comes to Data syncing between 2 applications , specially when a database is involved.
 We see many accounts where two Applications share a database and an update done to a table has to be read by another application .
@@ -17,6 +18,6 @@ Follow the guide below to setup a sample mysql DB  provide by **sakiladb**
 
  1. Create a Camel Route
 
- https://github.com/Lord-of-the-Pods/debezium-camel/blob/bce07f617af6dcec0ac08eccb08f47ba82ede753/src/main/java/com/example/sbcamelkafkaproducer/MyDebeziumRoute.java#L10-37
+https://github.com/Lord-of-the-Pods/debezium-camel/blob/bce07f617af6dcec0ac08eccb08f47ba82ede753/src/main/java/com/example/sbcamelkafkaproducer/MyDebeziumRoute.java#L10-L37
 
 
