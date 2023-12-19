@@ -1,8 +1,6 @@
 package com.example.sbcamelkafkaproducer;
 
 import org.apache.camel.builder.RouteBuilder;
-//import org.apache.kafka.common.protocol.types.Schema;
-//import org.apache.kafka.common.protocol.types.Struct;
 import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.Struct;
 import org.springframework.stereotype.Component;
@@ -12,8 +10,6 @@ public class MyDebeziumRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-
-        //databaseHostname=localhost&databaseUser=debezium&databasePassword=dbz
 
         from("debezium-mysql:dbz-test?databaseHostname=localhost" +
                 "&databaseServerName=sakila" +
@@ -28,8 +24,6 @@ public class MyDebeziumRoute extends RouteBuilder {
 
                     log.info("Body value is :" + bodyValue);
                     log.info("With Schema : " + schemaValue);
-                   // log.info("And fields of :" + schemaValue.fields());
-                   // log.info("Field name has `" + schemaValue.field("name").schema() + "` type");
                 });
 
 
