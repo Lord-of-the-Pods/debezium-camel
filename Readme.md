@@ -3,6 +3,8 @@
 There has always been an issue when is comes to Data syncing between 2 applications , specially when a database is involved.
 We see many accounts where two Applications share a database and an update done to a table has to be read by another application .
 
+<img src="/images/img1.jpg" width="60%" height="60%" >
+
 The usual old way was to keep on polling the database every nth minute to fetch the updated data. As the process is not real time there is always a delay in the sync time of the 2 applications .
 However, we figured out a way to Capture Data change using Debezium which a more elegant solution to the problem .
 We have already done a POC , I am attaching the same approaches with this email in the PDF file .
@@ -10,7 +12,11 @@ We have already done a POC , I am attaching the same approaches with this email 
 
  I already tried to demonstrate how we can setup a CDC with debezium and Kafka . In this example I have tried to do use Debezium without Kafka , I'll leverage Camel's Component for debezium & mysql
 
- 
+ <img src="/images/img2.jpg" width="60%" height="60%" >
+
+
+
+ <img src="/images/img3.jpg" width="60%" height="60%" >
 
 Follow the guide below to setup a sample mysql DB  provide by **sakiladb**
  -- https://github.com/sakiladb/mysql
